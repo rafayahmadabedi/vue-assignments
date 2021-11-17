@@ -9,12 +9,14 @@
         <label for="password">Password</label>
         <input type="text" name="password" v-model="formData.password">
     </div>
-    <button type="submit" @click="login">Sign Up</button>
+    <button type="submit" @click="login">Login</button>
+    <p>Don't have account? <router-link to="/signup">Signup here!</router-link></p>
     </form>
 </template>
 <script>
 
 export default {
+    name: 'Login',
     data() {
         return {
             formData: {
@@ -46,6 +48,9 @@ export default {
                 this.showError = true;
                 this.errorMsg = 'All fields are required!'
             }
+        },
+        gotoSignup() {
+            this.$router.push( {name: 'Signup', replace: true} )
         }
     }
     

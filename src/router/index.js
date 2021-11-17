@@ -4,7 +4,7 @@ import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import Dashboard from '../views/Dashboard.vue'
 
-// import canUserAccess from './guards'
+import canUserAccess from './guards'
 
 const routes = [
   {
@@ -42,10 +42,10 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach(() => {
+router.beforeEach((to) => {
   // canUserAccess() returns `true` or `false`
-  // const canAccess = canUserAccess(to)
-  // if (!canAccess) return '/login'
+  const canAccess = canUserAccess(to)
+  if (!canAccess) return '/login'
 })
 
 export default router

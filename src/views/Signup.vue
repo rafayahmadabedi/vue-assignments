@@ -1,6 +1,8 @@
 <template>
     <form>
-    <div v-show="showError"> {{ errorMsg }} </div>
+    <div class="error"> 
+        <span v-show="showError"> {{ errorMsg }} </span>
+    </div>
     <div>
         <label for="firstName">First Name</label>
         <input type="text" name="firstName" v-model="formData.firstName" required>
@@ -15,13 +17,15 @@
     </div>
     <div>
         <label for="password">Password</label>
-        <input type="text" name="password" v-model="formData.password" required>
+        <input type="password" name="password" v-model="formData.password" required>
     </div>
     <button type="submit" @click="signup">Sign Up</button>
+    <p>Already have account? <router-link to="/login">Login here!</router-link> </p>
     </form>
 </template>
 <script>
 export default {
+    name: 'Signup',
     data() {
         return {
             formData: {
@@ -39,7 +43,7 @@ export default {
             e.preventDefault();
             if (this.formData.firstName && this.formData.lastName && this.formData.email && this.formData.password) {
                 
-                let users = localStorage.users ? localStorage.users : [];
+                let users = localStorage.users ? JSON.parse(localStorage.users) : [];
 
                 if ( !(users.find( u => u.email === this.formData.email )) ) {
                     users = [...users, this.formData];
@@ -49,23 +53,21 @@ export default {
                 }
                 else {
                     this.showError = true;
-                    this.errorMsg = 'All the fields are required!';
+                    this.errorMsg = 'Email already used!';
                 }
             }
             else {
                 this.showError = true;
                 this.errorMsg = 'All the fields are required!';
             }
-            
-
-
-
-
         }
     }
     
 }
 </script>
 <style scoped>
-    
+    .error {
+        color: red;
+        margin: 50px;
+    }
 </style>
